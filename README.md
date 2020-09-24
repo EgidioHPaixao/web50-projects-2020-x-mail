@@ -14,3 +14,7 @@ Refresh the page using CTRL + F5
 When I was getting any e-mail (sent, inbox, archive), It wasn't working.
 The reason was the strftime function in models.py. The format of the string uses codes like "%-d" and "%-I".
 But this codes with "-" (hyphen or dash sign) doesn't work on Windows. Instead, I had to replace them for "#". So "%#d" and "%#I" works on Windows.
+
+#### Page always refreshing after form submission
+
+Solution: inf your javascript function, insert ``` return false ``` in the end
