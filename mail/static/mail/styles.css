@@ -1,5 +1,5 @@
 textarea {
-    min-height: 400px;
+    height: 50vh;
 }
 
 #email-recipient, .heading {
@@ -19,4 +19,8 @@ textarea {
 
 #archive-icon {
     height:2rem;
+}
+
+#reply-email-button {
+    margin-bottom: 1%;
 }

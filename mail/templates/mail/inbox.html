@@ -15,6 +15,7 @@
     </div>
 
     <div id="email-detail">
+        <button type="button" id="reply-email-button" class="btn btn-block btn-outline-primary">Reply</button>    
         <li class="list-group-item">
                 <div class="row">
                     <div class="heading col-xl-1 col-lg-2 col-md-2 col-sm-2">From</div>
@@ -40,13 +41,15 @@
                 </div>
             </li>  
         <div class="card">
-            <div id="email-view-body" class="card-body"></div>
-        </div>        
+            <textarea id="email-view-body" class="card-body"></textarea>
+        </div>    
+        
     </div>
 
     <div id="compose-view">
         <h3>New Email</h3>
         <form id="compose-form">
+            <input type="submit" class="btn btn-block btn-primary"/>
             <div class="form-group">
                 From: <input disabled class="form-control" value="{{ request.user.email }}">
             </div>
@@ -57,7 +60,7 @@
                 <input class="form-control" id="compose-subject" placeholder="Subject">
             </div>
             <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
-            <input type="submit" class="btn btn-primary"/>
+            
         </form>
     </div>
 {% endblock %}

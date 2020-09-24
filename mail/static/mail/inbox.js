@@ -19,21 +19,36 @@ function compose_email() {
   document.querySelector('#email-detail').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
 
-  // Clear out composition fields
   document.querySelector('#compose-recipients').value = '';
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
+  }
+
+function reply_email(email) {
+
+  // Show compose view and hide other views
+  document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#email-detail').style.display = 'none';
+  document.querySelector('#compose-view').style.display = 'block';
+
+
+  document.querySelector('#compose-recipients').value = email.sender;    
+  if(email.subject.indexOf("Re: ") === -1) {
+    email.subject = "Re: "+email.subject;
+  }
+  document.querySelector('#compose-subject').value = email.subject;
+  document.querySelector('#compose-body').value = `\n\nOn ${email.timestamp} ${email.sender} wrote:\n \n${email.body}`;
 }
 
 function load_mailbox(mailbox) {
+  
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#email-detail').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'none';
 
   // Show the mailbox name
-  document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
-
+  document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;  
   // Load e-mails
   fetch(`/emails/${mailbox}`)
   .then(response => response.json())
@@ -62,6 +77,7 @@ function send_email() {
   .then(result => {
       console.log(result);      
   });
+  localStorage.clear();
   load_mailbox('sent');
   return false;
 }
@@ -135,8 +151,11 @@ function view_email(email_id) {
       document.querySelector('#email-view-subject').innerHTML = email.subject;           
       document.querySelector('#email-view-timestamp').innerHTML = email.timestamp;           
       document.querySelector('#email-view-body').innerHTML = email.body;           
+      
+      document.getElementById('reply-email-button').addEventListener('click', () => reply_email(email) );      
   });
 
+  return false;
  
 }
 
