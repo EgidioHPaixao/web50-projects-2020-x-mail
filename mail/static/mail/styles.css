@@ -1,4 +1,4 @@
-textarea {
+textarea, #compose-body {
     height: 50vh;
 }
 
