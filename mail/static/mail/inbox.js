@@ -77,8 +77,10 @@ function send_email() {
   .then(result => {
       console.log(result);      
   });
-  localStorage.clear();
+  // localStorage.clear(); I believe we dont need to clear it as sqlite has
   load_mailbox('sent');
+  // i dont remember exactly why its needed anyway its reloding page
+  window.location.reload();
   return false;
 }
 
@@ -111,6 +113,7 @@ function show_email(email,mailbox) {
     emailDiv.append(timestamp);
     
     console.log(mailbox);
+  
     if(mailbox !== "sent") {
       const button = document.createElement('img');
       button.id = "archive-icon";
@@ -122,7 +125,8 @@ function show_email(email,mailbox) {
     
     const emailCard = document.createElement('div');
     emailCard.id = "email-card";
-    if(email.read){
+  // && mailbox !=="sent" is can be added as conditon to no gray read messages in sent box page
+    if(email.read && mailbox !=="sent"){
       emailCard.className = "read card";  
     } else {
       emailCard.className = "card";  
@@ -164,7 +168,8 @@ function change_email_archive(email_id,previousValue) {
   console.log(`updating email as archived = ${newValue}`);
   fetch(`/emails/${email_id}`, {
     method: 'PUT',
-    body: body = JSON.stringify({
+    // " body = " is no need for this but can be used as well
+    body: JSON.stringify({
       archived: newValue
     })
   })
@@ -178,7 +183,8 @@ function mark_email_as_read(email_id) {
   console.log(`updating email as read = true`);
   fetch(`/emails/${email_id}`, {
     method: 'PUT',
-    body: body = JSON.stringify({
+    // " body = " is no need for this but can be used as well
+    body: JSON.stringify({
       read: true
     })
   })
